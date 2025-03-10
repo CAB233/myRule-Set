@@ -1,23 +1,25 @@
 name: CI
-
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-
 jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
       - name: 导入仓库
         uses: actions/checkout@v4
-
-      - name: 准备上传文件
+      - name: 配置环境
         run: |
           mkdir -pv upload
-          mv -v ./*.json ./upload
-
+          bash <(curl -fsSL https://sing-box.app/deb-install.sh)
+      - name: 编译为二进制
+        run: |
+          sing-box rule-set compile ./*.json
+      - name: 准备上传文件
+        run: |
+          mv -v ./*.srs ./upload
       - name: 上传至 R2 存储桶
         uses: ryand56/r2-upload-action@latest
         with:
