@@ -3,7 +3,8 @@
   "rules": [
     {
       "domain": [
-        "m.inftab.com"
+        "m.inftab.com",
+        "relay-cn.aosc.io"
       ],
       "domain_suffix": [
         "infinitynewtab.com",
