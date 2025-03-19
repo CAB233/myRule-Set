@@ -16,7 +16,9 @@ jobs:
           bash <(curl -fsSL https://sing-box.app/deb-install.sh)
       - name: 编译为二进制
         run: |
-          sing-box rule-set compile ./*.json
+          for source in *.json; do
+            sing-box rule-set compile "$source"
+          done
       - name: 准备上传文件
         run: |
           mv -v ./*.srs ./upload
