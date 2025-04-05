@@ -4,7 +4,8 @@
     {
       "domain": [
         "m.inftab.com",
-        "relay-cn.aosc.io"
+        "relay-cn.aosc.io",
+        "redir.aosc.io"
       ],
       "domain_suffix": [
         "infinitynewtab.com",
