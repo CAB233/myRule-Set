@@ -21,16 +21,17 @@ jobs:
         run: |
           echo "build_dir=previous-build-${{ github.run_id }}-${{ github.run_number }}/sing-box" >> $GITHUB_OUTPUT
       - name: Remove upstream's custom rule
+        working-directory: ${{ steps.ramdisk.outputs.build_dir }}
         run: |
-          rm -v ${{ steps.ramdisk.outputs.build_dir }}/non_ip/my*.json
+          rm -v non_ip/my*.json
       - name: Append my custom rule
         run: |
           cp -rv source/* ${{ steps.ramdisk.outputs.build_dir }}
       - name: Custom patching
+        working-directory: ${{ steps.ramdisk.outputs.build_dir }}
         run: |
           sudo apt-get update
           sudo apt-get install moreutils
-          cd ${{ steps.ramdisk.outputs.build_dir }}
           jq '(.rules[].domain_suffix | arrays) |= map(select(. != "com.cn"))' non_ip/domestic.json | sponge non_ip/domestic.json
       - uses: actions/upload-artifact@v4
         with:
