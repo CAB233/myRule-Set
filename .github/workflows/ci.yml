@@ -19,7 +19,6 @@ jobs:
       - name: Grab Building Folder
         id: ramdisk
         run: |
-          echo "root_dir=/__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
           echo "build_dir=previous-build-${{ github.run_id }}-${{ github.run_number }}/sing-box" >> $GITHUB_OUTPUT
       - name: Remove upstream's custom rule
         run: |
@@ -32,7 +31,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install moreutils
           cd ${{ steps.ramdisk.outputs.build_dir }}
-          bash ${{ steps.ramdisk.outputs.root_dir }}/custom/patch.sh
+          jq '(.rules[].domain_suffix | arrays) |= map(select(. != "com.cn"))' non_ip/domestic.json | sponge non_ip/domestic.json
       - uses: actions/upload-artifact@v4
         with:
           name: build-artifact-${{ github.sha }}-${{ github.run_number }}
