@@ -28,7 +28,8 @@ jobs:
           cp -rv source/* ${{ steps.ramdisk.outputs.build_dir }}
       - name: Custom patching
         run: |
-          apt install -y sponge
+          sudo apt-get update
+          sudo apt-get install sponge
           bash custom/patch.sh
       - uses: actions/upload-artifact@v4
         with:
@@ -39,6 +40,7 @@ jobs:
           compression-level: 4
           include-hidden-files: false
   upload_to_cloudflare_r2:
+    needs: build
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/download-artifact@v4
