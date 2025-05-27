@@ -35,7 +35,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: build-artifact-${{ github.sha }}-${{ github.run_number }}
-          path: ${{ steps.ramdisk.outputs.build_dir }}/sing-box
+          path: ${{ steps.ramdisk.outputs.build_dir }}
           if-no-files-found: error
           retention-days: 1
           compression-level: 4
