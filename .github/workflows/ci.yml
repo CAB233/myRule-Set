@@ -11,10 +11,14 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Install sing-box
+        run: |
+          bash <(curl -fsSL https://sing-box.app/deb-install.sh)
       - name: Custom Build
         run: |
           bash build/patch_domestic.sh
           bash build/build_l4d2_block.sh
+          bash build/build_reject_extra.sh
       - uses: actions/upload-artifact@v4
         with:
           name: custom-build-artifact-${{ github.sha }}-${{ github.run_number }}
