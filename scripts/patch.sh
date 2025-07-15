@@ -3,11 +3,14 @@
 set -Eeuo pipefail
 
 function patch_domestic() {
-    local url="pre-build/sing-box/non_ip/domestic.json"
-    local temp_file="/tmp/non_ip/domestic.json"
-    local output_file="source/non_ip/domestic.json"
+    local root_dir="pre-build/sing-box"
+    local public_dir="public"
+
+    local source="$root_dir/non_ip/domestic.json"
+    local output_file="$public_dir/domainset/domestic.json"
 
     echo "non_ip/domestic.json: Removing com.cn ..."
-    curl -LSso "$temp_file" --create-dirs "$url"
-    jq '(.rules[].domain_suffix | arrays) |= map(select(. != "com.cn"))' "$temp_file" > "$output_file"
+    jq '(.rules[].domain_suffix | arrays) |= map(select(. != "com.cn"))' "$source" > "$output_file"
 }
+
+patch_domestic

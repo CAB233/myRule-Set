@@ -21,11 +21,11 @@ function merge() {
     local temp_dir
 
     temp_dir=$(mktemp -d)
-    file1="$temp_dir/file1.txt"
-    file2="$temp_dir/file2.txt"
-    _file1="$temp_dir/_file1.txt"
-    _file2="$temp_dir/_file2.txt"
-    common="$temp_dir/common.txt"
+    local file1="$temp_dir/file1.txt"
+    local file2="$temp_dir/file2.txt"
+    local _file1="$temp_dir/_file1.txt"
+    local _file2="$temp_dir/_file2.txt"
+    local common="$temp_dir/common.txt"
 
     find "$root_dir/$dir1" -type f > "$file1"
     find "$root_dir/$dir2" -type f > "$file2"
