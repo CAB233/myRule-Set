@@ -2,12 +2,12 @@
 
 set -Eeuo pipefail
 
-function build_l4d2_block() {
+function build_reject_l4d2() {
     local url="https://github.com/yxnan/block-l4d2-rpg-servers/releases/download/latest/rpglist.json"
-    local temp_file="/tmp/ip/l4d2.json"
-    local output_file="source/ip/l4d2.json"
+    local temp_file="/tmp/ip/reject_l4d2.json"
+    local output_file="source/ip/reject_l4d2.json"
 
-    echo "ip/l4d2.json: Building L4D2 Block List ..."
+    echo "ip/reject_l4d2.json: Building L4D2 Block List ..."
     curl -LSso "$temp_file" --create-dirs "$url"
     jq '{version: 2, rules: [{ip_cidr: (.data | map(.raddr + "/32"))}]} ' "$temp_file" > "$output_file"
 }
@@ -46,5 +46,5 @@ function merge() {
     cp -v "$root_dir/$dir3"/* "$public_dir/$dir3/"
 }
 
-build_l4d2_block
+build_reject_l4d2
 merge
