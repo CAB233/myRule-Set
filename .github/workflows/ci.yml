@@ -24,10 +24,13 @@ jobs:
           repository: SukkaLab/ruleset.skk.moe
           path: pre-build
 
-      - name: Remove Upstream's Custom Ruleset
+      - name: Remove Upstream's Ruleset
         working-directory: pre-build/sing-box
         run: |
-          rm -v non_ip/my*.json
+          rm -v \
+            non_ip/my*.json \
+            non_ip/reject-url-regex.json \
+            non_ip/cloudmounter.json
 
       - name: Prepare public directory
         run: |
