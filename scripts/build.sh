@@ -7,7 +7,6 @@ function merge() {
     local public_dir="public"
     local dir1="domainset"
     local dir2="non_ip"
-    local dir3="ip"
     local temp_dir
 
     temp_dir=$(mktemp -d)
@@ -33,7 +32,6 @@ function merge() {
     done
     cp -v "$root_dir/$dir1"/* "$public_dir/$dir1/"
     cp -v "$root_dir/$dir2"/* "$public_dir/$dir1/"
-    cp -v "$root_dir/$dir3"/* "$public_dir/$dir3/"
 }
 
 merge
