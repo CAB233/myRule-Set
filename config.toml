@@ -13,7 +13,7 @@ source = [
 
 [geosite.private]
 source = [
-  "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/non_ip/lan.json",
+  "https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-private.json",
 ]
 
 [geosite.direct]
