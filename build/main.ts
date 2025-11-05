@@ -1,11 +1,11 @@
 import { join } from '@std/path';
 import { assert } from '@std/assert';
 import { parse } from '@std/toml';
+import { deepMerge } from '@std/collections/deep-merge';
 
 import { CONFIG_FILE, PUBLIC_DIR, ROOT_DIR } from './lib/env.ts';
 import { Config, TomlSection } from './lib/types.ts';
 import { fetchRules } from './lib/fetch.ts';
-//import { mergeDuplicateRules } from './lib/merge.ts';
 
 async function main() {
     const tomlFile = join(ROOT_DIR, CONFIG_FILE);
@@ -42,7 +42,7 @@ async function main() {
             );
             if (!section.source || !Array.isArray(section.source)) {
                 console.warn(
-                    `[WARN] ${category}.${name}：没有找到 'source' 数组`,
+                    `[WARN] [${category}.${name}] 中没有找到 'source' 数组`,
                 );
                 continue;
             }
@@ -52,11 +52,18 @@ async function main() {
                     fetchRules(url, category)
                 );
                 const results = await Promise.all(fetchPromises);
-                const allRules = results.flat();
-                //let allRules = results.flat();
-                //if (section.merge === true) {
-                //    allRules = mergeDuplicateRules(allRules);
-                //}
+
+                let allRules = results.flat();
+                if (section.merge === true) {
+                    allRules = [
+                        allRules.reduce((acc, curr) =>
+                            deepMerge(
+                                acc as Record<string, unknown>,
+                                curr as Record<string, unknown>,
+                            ), {}),
+                    ];
+                }
+
                 const outputJson = {
                     version: version,
                     rules: allRules,

@@ -1,6 +1,7 @@
 version = 2
 
 [geosite.reject]
+merge = true
 source = [
   "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/domainset/reject.json",
   "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/domainset/reject_extra.json"
@@ -17,6 +18,7 @@ source = [
 ]
 
 [geosite.direct]
+merge = true
 source = [
   "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/domainset/game-download.json",
   "https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-geolocation-cn.json",
@@ -37,7 +39,7 @@ source = [
 ]
 
 [geoip.cn]
-#merge = true
+merge = true
 source = [
   "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/ip/china_ip.json",
   "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/ip/china_ip_ipv6.json",
