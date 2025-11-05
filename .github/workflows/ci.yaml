@@ -6,51 +6,39 @@ on:
       - main
   schedule:
     - cron: "45 11 * * *"
+env: 
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SING_BOX_VERSION: 1.12.8
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install sing-box
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 安装 sing-box-${{ env.SING_BOX_VERSION }}
         run: |
-          curl -fsSL https://sing-box.app/install.sh | sh
+          curl -fsSL https://sing-box.app/install.sh | sh -s -- --version "${{ env.SING_BOX_VERSION }}"
+          sing-box version
 
-      - name: Download Previous Build
-        uses: actions/checkout@v4
+      - name: 安装 Deno
+        uses: denoland/setup-deno@v2
         with:
-          repository: SukkaLab/ruleset.skk.moe
-          path: pre-build
+          deno-version: v2.x
 
-      - name: Remove Upstream's Ruleset
-        working-directory: pre-build/sing-box
+      - name: 准备构建环境
         run: |
-          rm -v \
-            non_ip/my*.json \
-            non_ip/reject-url-regex.json \
-            non_ip/cloudmounter.json
+          mkdir -pv public
 
-      - name: Prepare public directory
+      - name: 构建 json 格式规则集
         run: |
-          mkdir -pv public/{domainset,ip}
+          deno task build
 
-      - name: Custom Build
-        run: |
-          bash scripts/patch.sh
-          bash scripts/build.sh
-
-      - name: Append Custom Ruleset
-        run: |
-          cp -rv source/* public/
-
-      - name: Compile json to rule-set
+      - name: 构建 srs 格式规则集
         working-directory: public
         run: |
-          for json in domainset/*.json ip/*.json; do
-            echo "Compile rule-set: $json"
-            sing-box rule-set compile "$json"
+          for i in *.json; do
+            echo "[INFO] 编译 $i"
+            sing-box rule-set compile "$i"
           done
 
       - uses: actions/upload-artifact@v4
@@ -79,4 +67,4 @@ jobs:
           r2-bucket: ${{ secrets.R2_BUCKET }}
           source-dir: public
           destination-dir: ruleset
-          keep-file-fresh: true
+          keep-file-fresh: false
