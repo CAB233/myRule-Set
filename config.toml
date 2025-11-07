@@ -1,10 +1,8 @@
 version = 2
 
 [geosite.reject]
-merge = true
 source = [
-  "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/domainset/reject.json",
-  "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/refs/heads/master/sing-box/domainset/reject_extra.json"
+  "https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-category-ads-all.json",
 ]
 
 [geosite.reject-no-drop]
