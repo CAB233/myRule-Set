@@ -15,6 +15,11 @@ source = [
   "https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-private.json",
 ]
 
+[geosite.connectivity-check]
+source = [
+  "https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-connectivity-check.json",
+]
+
 [geosite.direct]
 merge = true
 source = [
